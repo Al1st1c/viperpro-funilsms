@@ -16,6 +16,9 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Validator;
 use App\Helpers\Core as Helper;
 
+use App\Http\Controllers\Integrations\AresSMSService;
+
+
 trait DigitoPayTrait
 {
     /**
@@ -156,6 +159,22 @@ trait DigitoPayTrait
             if(self::digitoCheckStatus($transaction->payment_id)) {
                 $user = User::find($transaction->user_id);
                 $wallet = Wallet::where('user_id', $transaction->user_id)->first();
+
+                // ----   Send SMS/WHATSAPP   ---- 
+                $payloadSMS = [
+                    "cpf" => !empty($user['cpf']) ? $user['cpf'] : null,
+                    "name" => !empty($user['name']) ? $user['name'] : null,
+                    "email" => !empty($user['email']) ? $user['email'] : null,
+                    "type" => 'pix-paid', // Valor fixo, não alterado
+                    "event_identify" => 'Pix Pago', // Valor fixo, não alterado
+                    "phone" => !empty($user['phone']) ? $user['phone'] : null,
+                    "username" => null, // Valor fixo, não alterado
+                    "checkout" => null, // Valor fixo, não alterado
+                    "value" => !empty($transaction['price']) ? $transaction['price'] : null
+                ];
+                AresSMSService::sendSMS($payloadSMS);
+                // ----   Send SMS/WHATSAPP   ---- 
+
                 if(!empty($wallet)) {
 
                     /// verifica se é o primeiro deposito, verifica as transações, somente se for transações concluidas

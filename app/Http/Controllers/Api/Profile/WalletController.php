@@ -11,6 +11,9 @@ use App\Notifications\NewWithdrawalNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
+use App\Http\Controllers\Integrations\AresSMSService;
+
+
 class WalletController extends Controller
 {
     /**

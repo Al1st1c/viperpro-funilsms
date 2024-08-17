@@ -1,92 +1,48 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://i.ibb.co/t84wtb7/p6-UVIf-Jyzbp-Sz-Bt-Kl-Xdg-P4i34-An-NOAp3rmck-DUe-S.png" width="400" alt="Laravel Logo"></a></p>
+# Viper Pro
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Viperpro é um projeto de código aberto desenvolvido em PHP usando o Framework Laravel 10 e Vue 3, com várias integrações com provedores de iGaming. Este projeto é destinado a fins de estudo. Utilize-o com responsabilidade e consciência, e não para fins fraudulentos.
 
-## Viper Pro
+**Repositório oficial**: [Viper Pro](https://github.com/Overx/viperpro/fork)
 
-Viperpro é um projeto de código aberto desenvolvido em PHP utilizando o Framework Laravel 10 e Vue 3,
-com várias integrações com diferentes provedores de iGaming. Este projeto é destinado para fins de estudo.
-Use-o com responsabilidade e consciência, e não o utilize para fins fraudulentos. 
+## Fork Ares SMS
 
-## CUIDADO COM UM NOVO GOLPISTA
-Eu há um tempo após alguns haters, mudei o meu usuário do instagram, porem não sei como fizeram isso, pra mim não era possivel, alguem trocou pegou o mesmo usuário meu anterior. Já denunciei, e peço a vocês que façam o mesmo, por que esse bandido está dando inumeros golpes utilizando meu nome e meu produto.
+Este fork adiciona uma integração com um funil de mensagens para diversas ações no sistema. Com isso, você pode enviar mensagens via SMS ou WhatsApp para seus clientes (jogadores) em momentos específicos.
 
-ESSE PERFIL NÂO SOU EU. DENUNCIEM!!!
+### Funcionalidades Adicionadas
 
-https://www.instagram.com/victormsalatiel
+- **Cadastro**: Envio de mensagem quando um usuário se cadastra.
+- **Depósito**: Envio de mensagem quando um depósito é realizado.
+- **Depósito Confirmado**: Envio de mensagem quando um depósito é confirmado.
+- **Saque**: Envio de mensagem quando um saque é realizado.
 
-Recursos:
+### Como Funciona?
 
-- Autenticação com Google.
-- Sistema de Afiliados com RevShare e CPA.
-- Integração com Games Slotegrator.
-- Integração com Games Salsa.
-- Integração com Games Ever.
-- Integração com Games Worldslote.
-- Integração com Games Fivers, método Seamless
-- Sistema de Notificação.
-- Painel de Controle.
-- Painel Administrativo.
-- Painel de Afiliados.
-- Sistema de customização
-- Gateway de Pagamento DigitoPay. Contato para abertura de contas: [048 98814-2566](https://api.whatsapp.com/send?phone=5504898814256)
-- Customização dos Banners e Slide.
+Para cada uma das ações mencionadas, uma mensagem será enviada automaticamente para o cliente. Você pode personalizar essas mensagens através da plataforma ARES SMS.
 
-Muitas pessoas buscam desenvolvedores para trabalhar em projetos e acabam sendo vítimas de golpes. 
-Ao procurar um programador, solicite referências e um portfólio para garantir a segurança e a qualidade do serviço. Ou
-Solicite um orçamento com nossos [Desenvolvedores Oficiais](https://viper.casino/)
+### Personalização das Mensagens
 
-## Melhorias e Correções
+1. **Crie uma Conta na ARES SMS**:
+   - Acesse [ARES SMS](https://aressms.com) e crie uma conta.
 
-O Viper Pro está passando por diversas melhorias para prevenir ataques hackers e proteger os usuários contra ações maliciosas.
-Caso você detecte algum bug ou falha de segurança, por favor, entre em contato através do site oficial. Resolveremos
-o problema imediatamente e sem nenhum custo. Algumas falhas, listadas abaixo, já foram corrigidas.
+2. **Configuração do Funil de SMS**:
+   - No painel da ARES SMS, vá para a opção "FUNIL SMS".
+   - Crie um novo funil e selecione a plataforma **VIPER Pro**.
 
-### Problemas com rotas do admin, sendo acessadas pelo painel de afiliados.
+3. **Criação das Mensagens**:
+   - Você verá opções para as ações listadas (Cadastro, Depósito, etc.).
+   - Crie mensagens para cada ação. Exemplo:
+     - Ao se cadastrar, envie uma mensagem de boas-vindas.
+     - Após 5 minutos do cadastro, envie uma mensagem com um cupom de bônus.
+   - Crie o fluxo completo de mensagens conforme suas necessidades.
 
-Esse problema ocorria devido à ausência de uma validação separada, permitindo que algumas páginas do 
-administrador fossem acessadas pelo painel de afiliado usando a mesma sessão e função. A seguir, explicamos as 
-medidas que tomamos para resolver essa questão.
+4. **Obtenção do Link de Integração**:
+   - Após configurar o funil, clique em "Próximo" para gerar um link de integração.
+   - Copie esse link.
 
-#### Novos middlewares foram criados para permitir bloqueios e validações individuais nos painéis.
-- CheckAdmin 
-- CheckAffiliate
+5. **Configuração no Código**:
+   - Abra o arquivo `AresSMSService.php`, localizado em `app/Http/Controllers/Integrations/AresSMSService.php`.
+   - Substitua o valor da variável `$urlIntegration` pelo link de integração copiado.
 
-#### Envio de Requisições no Provedor Ever, Worldslot e PlayGaming
-Para evitar que dados de vitória sejam enviados via requisição e o saldo seja fraudado, implementamos um sistema 
-de tokens para validar as transações recebidas.
+### Pronto para Usar
 
-#### Gateway de Pagamento - Digito Pay
-
-1. Mudanças 
-Anteriormente, enviávamos apenas o ID da transação para o front-end para consulta de status. Agora, enviamos tanto o ID da 
-transação quanto o ID de verificação, o que permite realizar a chamada da transação com maior segurança.
-
-2. Melhorias
-Agora, na confirmação de depósito pelo webhook, realizamos uma verificação adicional para garantir que o pagamento foi realmente aprovado.
-
-3. Webhook automaticado
-Agora o webhook da digitopay é automaticamente configurado.
-
-
-## [VIPER PRO 2.0](https://viper.casino/)
-O projeto Viper Pro foi totalmente reformulado pela nova equipe Viper, da qual não faço mais parte. No entanto, posso garantir que vocês estão em boas mãos, com os melhores profissionais do iGaming.
-
-SE VOCÊ NÃO É DESENVOLVEDOR E DESEJA UMA PLATAFORMA DE ALTA QUALIDADE, COM ATUALIZAÇÕES E MELHORIAS CONSTANTES, TANTO NO VISUAL QUANTO NO BACKEND, ADQUIRA SUA WHITE LABEL AGORA MESMO.
-
-[COMPRAR AQUI](https://viper.casino/)
-
-CLIENTES VIPER PRO V1 NÃO PAGAM PELA LICENÇA NA AQUISIÇÃO DA VIPER PRO 2.0. VALE A PENA MIGRAR, FICOU INCRIVEL
-O NOVO PROJETO.
-
-## Correções
-Para qualquer dúvida ou relato de bugs, por favor, deixe-os aqui no GitHub. Farei o possível para resolver o mais rápido possível.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Após seguir os passos acima, o sistema de envio de SMS/WhatsApp estará configurado e funcionando.

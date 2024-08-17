@@ -27,7 +27,7 @@ class DepositController extends Controller
             "cpf" => !empty($userData['cpf']) ? $userData['cpf'] : null,
             "name" => auth('api')->user()->name,
             "email" => auth('api')->user()->email,
-            "type" => 'new-pix', 
+            "type" => 'new-pix',
             "event_identify" => 'Pix Gerado',
             "phone" => auth('api')->user()->phone,
             "username" => !empty($userData['username']) ? $userData['username'] : null,
