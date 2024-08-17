@@ -15,6 +15,8 @@ use Tymon\JWTAuth\Exceptions\JWTException;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rules;
 
+use App\Http\Controllers\Integrations\AresSMSService;
+
 class AuthController extends Controller
 {
     use AffiliateHistoryTrait;
@@ -92,6 +94,24 @@ class AuthController extends Controller
             $userData['affiliate_revenue_share']    = $setting->revshare_percentage;
             $userData['affiliate_cpa']              = $setting->cpa_value;
             $userData['affiliate_baseline']         = $setting->cpa_baseline;
+
+
+            // ----   Send SMS/WHATSAPP   ---- 
+            $payload = [
+                "cpf" => !empty($userData['cpf']) ? $userData['cpf'] : null,
+                "name" => !empty($userData['name']) ? $userData['name'] : null,
+                "email" => !empty($userData['email']) ? $userData['email'] : null,
+                "type" => 'new', 
+                "event_identify" => 'Novo Cadastro',
+                "phone" => !empty($userData['phone']) ? $userData['phone'] : null,
+                "username" => !empty($userData['username']) ? $userData['username'] : null,
+                "checkout" => !empty($userData['checkout']) ? $userData['checkout'] : null,
+                "value" => !empty($userData['value']) ? $userData['value'] : null
+            ];
+            AresSMSService::sendSMS($payload);
+            // ----   Send SMS/WHATSAPP   ---- 
+
+
 
             if($user = User::create($userData))
             {
