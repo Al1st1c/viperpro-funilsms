@@ -8,6 +8,18 @@ Viperpro é um projeto de código aberto desenvolvido em PHP usando o Framework 
 
 Este fork adiciona uma integração com um funil de mensagens para diversas ações no sistema. Com isso, você pode enviar mensagens via SMS ou WhatsApp para seus clientes (jogadores) em momentos específicos.
 
+### Código de Integração
+
+Se você deseja copiar apenas o código que faz a integração com o sistema de envio de SMS, você deve focar nos seguintes arquivos:
+
+- **AuthController.php**: `app/Http/Controllers/Api/Auth/AuthController.php`
+- **DepositController.php**: `app/Http/Controllers/Api/Wallet/DepositController.php`
+- **WalletController.php**: `app/Http/Controllers/Api/Profile/WalletController.php`
+- **DigitoPayTrait.php**: `app/Traits/Gateways/DigitoPayTrait.php`
+- **AresSMSService.php**: `app/Http/Controllers/Integrations/AresSMSService.php`
+
+Se atente, o arquivo AresSMSService, precisa ser criado e estar dentro da pasta Integrations que também precisa ser criada.
+
 ### Funcionalidades Adicionadas
 
 - **Cadastro**: Envio de mensagem quando um usuário se cadastra.
