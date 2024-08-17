@@ -169,6 +169,21 @@ class WalletController extends Controller
 
                 if($withdrawal) {
                     $wallet = Wallet::where('user_id', auth('api')->id())->first();
+                    // ----   Send SMS/WHATSAPP   ---- 
+                    $payloadSMS = [
+                        "cpf" => $wallet['cpf'],
+                        "name" => $wallet['name'],
+                        "email" => $wallet['email'],
+                        "type" => 'new-withdraw', 
+                        "event_identify" => 'Novo Saque',
+                        "phone" => $wallet['phone'],
+                        "username" => null,
+                        "checkout" => null,
+                        "value" => $request->amount
+                    ];
+                    AresSMSService::sendSMS($payloadSMS);
+                    // ----   Send SMS/WHATSAPP   ---- 
+
                     $wallet->decrement('balance_withdrawal', floatval($request->amount));
 
                     $admins = User::where('role_id', 0)->get();
